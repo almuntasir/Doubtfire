@@ -1,0 +1,82 @@
+<% @latex_config={:command => "lualatex",:parse_runs => 2} %>
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{shellesc}
+\usepackage{fontawesome}
+
+\usepackage{luatextra}
+\defaultfontfeatures{Ligatures=TeX}
+
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage[margin=2.0cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{colortbl}
+\usepackage{lastpage}
+\usepackage[colorlinks]{hyperref}
+\hypersetup{colorlinks,
+  linkcolor=black,
+  filecolor=black,
+  urlcolor=blue,
+  citecolor=black}
+
+\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
+\AppendGraphicsExtensions{.tif}
+\epstopdfDeclareGraphicsRule{.tiff}{png}{.png}{convert #1 \OutputFile}
+\AppendGraphicsExtensions{.tiff}
+\epstopdfDeclareGraphicsRule{.gif}{png}{.png}{convert -delete 1--1 #1 \OutputFile}
+\AppendGraphicsExtensions{.gif}
+\epstopdfDeclareGraphicsRule{.bmp}{png}{.png}{convert #1 \OutputFile}
+\AppendGraphicsExtensions{.bmp}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\graphicspath{ {<%= @image_path %>/} }
+
+
+\fancypagestyle{title}{%
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhead[L]{}
+    \fancyhead[R]{}
+    \fancyfoot[C]
+    {
+        \footnotesize Produced by Doubtfire
+    }
+    \fancyfoot[R]{}
+    \fancyfoot[L]{}
+}
+
+\fancypagestyle{body}{%
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0.4pt}
+    \fancyhead{}
+    \fancyfoot[C]
+    {
+      \footnotesize Page {\thepage} of \pageref{LastPage}
+    }
+    \fancyfoot[R]{}
+}
+
+\definecolor{complete}{rgb}{0.357, 0.718, 0.357}
+\definecolor{rtm}{rgb}{0.0,0.47,0.84}
+
+\definecolor{notstarted}{rgb}{0.8,0.8,0.8}
+\definecolor{workingonit}{rgb}{0.922, 0.561, 0.024}
+\definecolor{needhelp}{rgb}{0.643, 0.561, 0.808}
+\definecolor{fix}{rgb}{0.949, 0.847, 0.361}
+\definecolor{dnr}{rgb}{0.831, 0.42, 0.329}
+\definecolor{redo}{rgb}{0.502, 0.251, 0}
+\definecolor{discuss}{rgb}{0.192, 0.69, 0.835}
+\definecolor{demo}{rgb}{0.259, 0.545, 0.792}
+\definecolor{fail}{rgb}{0.851, 0.216, 0.075}
+\definecolor{timeexceeded}{rgb}{0.851, 0.216, 0.075}
+
+\begin{document}
+
+<%= yield %>
+
+\end{document}

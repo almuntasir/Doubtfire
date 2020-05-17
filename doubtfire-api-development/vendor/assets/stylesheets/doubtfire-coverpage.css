@@ -1,0 +1,83 @@
+body { font-family: "Helvetica Neue", Helvetica, Arial,sans-serif; color: #333; line-height:1.42857143; font-size: 14px; width: 500px; margin: 0 auto; }
+h1 { padding-bottom: 9px; border-bottom: 1px solid #eee; font-size:26px; }
+h2 { font-weight: 300; font-size: 20px; }
+
+dt { 
+  font-weight:700;
+  float: left;
+  width: 160px;
+  overflow: hidden;
+  clear: left;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+dd {
+  margin-left:180px;
+  width: 300px;
+  overflow: hidden;
+}
+dl {
+  position: relative;
+  padding: 45px 15px 15px;
+  margin: 0 -15px 15px;
+  background-color: #fff;
+  border-color: #ddd;
+  border-width: 1px;
+  border-radius: 4px 4px 0 0;
+  border-style: solid;
+  
+}
+dl::after {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 12px;
+  font-weight: 700;
+  width: 475px;
+  color: #959595;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+  content: "Upload Details";
+}
+pre { font-family: Menlo, Monaco, Consolas, "Courier New", monospace; display: inline; font-size: 14px; }
+footer { margin-top: 550px; padding-top: 5px; font-size: 10px; color: #888; text-align: right; border-top: 1px solid #eee; }
+
+button.task-status.ready-to-mark {
+  background-color: #0079D8;
+  color: white;
+}
+button.task-status.not-submitted {
+  background-color: #CCCCCC;
+  color: white;
+}
+button.task-status.working-on-it {
+  background-color: #EB8F06;
+  color: white;
+}
+button.task-status.need-help {
+  background-color: #b09cd7;
+  color: white;
+}
+button.task-status.fix-and-resubmit {
+  background-color: #f2d85c;
+  color: white;
+}
+button.task-status.fix-and-include {
+  background-color: #d93713;
+  color: white;
+}
+button.task-status.redo {
+  background-color: #804000;
+  color: white;
+}
+button.task-status.discuss {
+  background-color: #31b0d5;
+  color: white;
+}
+button.task-status.complete {
+  background-color: #5BB75B;
+  background-image: linear-gradient(#62c462, #51a351);
+  color: white;
+}

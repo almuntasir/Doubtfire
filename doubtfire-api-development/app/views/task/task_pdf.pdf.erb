@@ -1,0 +1,118 @@
+\begin{titlepage}
+  \thispagestyle{title}
+  \center
+
+%----------------------------------------------------------------------------------------
+%   HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+  \textsc{\LARGE <%= lesc @institution_name  %>}\\[1.5cm] % Name of your university/college
+  \textsc{\Large <%= lesc @task.unit.name %>}\\[0.5cm] % Major heading such as course name
+  \textsc{\large <%= lesc @doubtfire_product_name %> Submission}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+  \HRule \\[0.4cm]
+  { \huge \bfseries <%= lesc @task.name %>}\\[0.4cm] % Title of your document
+  \HRule \\[1.5cm]
+
+%----------------------------------------------------------------------------------------
+%   AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Submitted By:} \\
+<%  if @task.group_task? %>
+<%=   lesc @task.group_submission.submitted_by_project.student.first_name %> \textsc{<%= lesc @task.group_submission.submitted_by_project.student.last_name %>}\\
+<%=   lesc @task.group_submission.submitted_by_project.student.username %>\\[1cm]
+<%  else %>
+<%=   lesc @task.student.first_name %> \textsc{<%= lesc @task.student.last_name %>}\\
+<%=   lesc @task.student.username %>\\
+<%=   lesc @task.submission_date.nil? ? "" : @task.submission_date.localtime.strftime("%Y/%m/%d %H:%M") %>
+<%  end %>
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Tutor:} \\
+<%  if @task.group_task? and not @task.group.tutor.nil? %>
+<%=   lesc @task.group.tutor.first_name %> \textsc{<%= lesc @task.group.tutor.last_name %>} % Supervisor's Name
+<%  elsif not @task.project.tutor_for(@task.task_definition).nil? %>
+<%=   lesc @task.project.tutor_for(@task.task_definition).first_name %> \textsc{<%= lesc @task.project.tutor_for(@task.task_definition).last_name %>} % Supervisor's Name
+<%  else %>
+No Tutor % Supervisor's Name
+<%  end %>
+\end{flushright}
+\end{minipage}\\[1cm]
+
+<%  if @task.group_task? %>
+\emph{Group Members:} \\
+\begin{tabular}{llll}
+<%    for grp_task in @task.group_submission.tasks %>
+<%      next if grp_task.nil? %>
+<%= lesc grp_task.student.username %> &
+<%= lesc grp_task.student.first_name %> &
+\textsc{<%= lesc grp_task.student.last_name %>} &
+{\footnotesize \ttfamily <%= '\faChild' * grp_task.contribution_pts %>}\\
+<%    end %>
+\end{tabular}\\[1cm]
+<%  end %>
+
+<% if @task.learning_outcome_task_links.count > 0 %>
+\begin{tabular}{p{8cm}|l}
+\textbf{Outcome} & \textbf{Weight}\\
+\hline
+<% @task.learning_outcome_task_links.each do | link | %>
+    <%= lesc link.learning_outcome.name %> &
+    $<%= '\blacklozenge' * link.rating %><%= '\lozenge' * (5 - link.rating) %>$ \\
+<%    end %>
+\end{tabular}\\[0.5cm]
+
+<%= lesc @task.learning_outcome_task_links.last.description.present? && @task.learning_outcome_task_links.last.description.strip.length > 0 ? @task.learning_outcome_task_links.last.description : "(none)" %> \\[2cm]
+
+<% end %>
+%----------------------------------------------------------------------------------------
+% DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[3cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+% LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[width=1cm]{apple-touch-icon-180x180.png}
+
+\vfill
+
+\end{titlepage}
+
+\pagestyle{body}
+
+<% @files.each_with_index do |file, idx| %>
+  <%  if file != @files.first %>
+  \clearpage
+  <%  end %>
+
+  \fancyhead[L]{ File <%= idx + 1 %> of <%= @files.count %>  }
+  \fancyhead[R]{ <%= lesc @task.upload_requirements[idx]['name'] %>  }
+
+  <% if file[:type] == 'image' %>
+    \graphicspath{ {<%= @base_path %>} }
+    \includegraphics[width=\textwidth]{<%= File.basename(file[:path]) %>}
+  <% end %>
+
+  <% if file[:type] == 'code' %>
+    \inputminted[breaklines,linenos,breakanywhere,tabsize=4]{<%= Task.pygments_lang(File.extname(file[:path])[1..-1]) %>}{<%= file[:path] %>}
+  <% end %>
+
+  <% if file[:type] == 'document' %>
+    \includepdf[pages={1-}]{<%= file[:path] %>}
+  <% end %>
+<% end %>
+
+ % section hello_world (end) Hello World

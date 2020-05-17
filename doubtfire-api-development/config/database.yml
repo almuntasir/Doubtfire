@@ -1,0 +1,29 @@
+development:
+  adapter: postgresql
+  database: doubtfire_dev
+  username: itig
+  password: d872$dh
+  host:  localhost
+  min_messages: warning
+
+test:
+  adapter: postgresql
+  database: doubtfire_dev_test
+  username: itig
+  password: d872$dh
+  host: localhost
+  min_messages: warning
+
+staging:
+  adapter:  <%= ENV['DF_STAGING_DB_ADAPTER']  %>
+  host:     <%= ENV['DF_STAGING_DB_HOST']     %>
+  database: <%= ENV['DF_STAGING_DB_DATABASE'] %>
+  username: <%= ENV['DF_STAGING_DB_USERNAME'] %>
+  password: <%= ENV['DF_STAGING_DB_PASSWORD'] %>
+
+production:
+  adapter:  <%= ENV['DF_PRODUCTION_DB_ADAPTER']  %>
+  host:     <%= ENV['DF_PRODUCTION_DB_HOST']     %>
+  database: <%= ENV['DF_PRODUCTION_DB_DATABASE'] %>
+  username: <%= ENV['DF_PRODUCTION_DB_USERNAME'] %>
+  password: <%= ENV['DF_PRODUCTION_DB_PASSWORD'] %>
